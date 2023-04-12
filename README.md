@@ -1,1 +1,0 @@
-# vuejs-developer-applicant-challenge

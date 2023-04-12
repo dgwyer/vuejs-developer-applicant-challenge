@@ -1,0 +1,23 @@
+{
+	"name": "wc-plugins/wc-boilerplate",
+	"description": "",
+	"authors": [
+		{
+			"name": "Phil Kurth",
+			"email": "phil@philkurth.com.au"
+		},
+		{
+			"name": "David Gwyer",
+			"email": "d.v.gwyer@gmail.com"
+		}
+	],
+	"require": {
+		"freemius/wordpress-sdk": "^2.5",
+		"wp-coding-standards/wpcs": "^2.3"
+	},
+	"scripts": {
+		"post-update-cmd": [
+			"vendor/bin/phpcs --config-set installed_paths ../../wp-coding-standards/wpcs"
+		]
+	}
+}
