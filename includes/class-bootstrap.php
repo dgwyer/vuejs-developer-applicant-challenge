@@ -36,8 +36,6 @@ class Bootstrap {
 			'emails'    => array( get_option( 'admin_email' ) ),
 		);
 
-		// $decode      = json_decode( $json_string, true );
-
 		if ( ! get_option( 'test_project_option' ) ) {
 			update_option( 'test_project_option', wp_json_encode( $defaults ) );
 		}
