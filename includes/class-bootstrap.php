@@ -8,6 +8,7 @@
 namespace VueJSDeveloperChallenge;
 
 use VueJSDeveloperChallenge\Settings\Plugin_Settings;
+use VueJSDeveloperChallenge\Routes\Routes;
 
 /**
  * Bootstrap class.
@@ -24,6 +25,7 @@ class Bootstrap {
 
 		new Constants( $file );
 		new Plugin_Settings();
+		new Routes();
 	}
 
 	/**

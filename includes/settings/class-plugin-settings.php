@@ -81,6 +81,15 @@ class Plugin_Settings {
 			$asset_file['version'],
 			true
 		);
+		wp_add_inline_script(
+			'test-project-app-js',
+			'window.testProjectApp = ' . \wp_json_encode(
+				array(
+					'site' => \esc_url_raw( \get_site_url() ),
+				)
+			),
+			'before'
+		);
 
 		// Enqueue style.
 		wp_enqueue_style(
