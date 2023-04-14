@@ -30,6 +30,7 @@ class Constants {
 			'plugin_dir_path' => plugin_dir_path( $file ),
 			'plugin_dir_url'  => plugin_dir_url( $file ),
 			'plugin_url'      => plugins_url( '', $file ),
+			'file'            => $file,
 		);
 	}
 }

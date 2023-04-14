@@ -7,6 +7,8 @@
 
 namespace VueJSDeveloperChallenge\Settings;
 
+use VueJSDeveloperChallenge\Constants;
+
 /**
  * Settings class.
  */
@@ -18,6 +20,7 @@ class Plugin_Settings {
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'register_plugin_settings' ) );
 		add_action( 'admin_menu', array( $this, 'add_options_page' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'load_admin_scripts' ) );
 	}
 
 	/**
@@ -44,13 +47,47 @@ class Plugin_Settings {
 	 * Render the plugin options page.
 	 */
 	public function render_settings_page() {
-		$opt = get_option( 'test_project_option' );
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Test Project Settings', 'vuejs-challenge' ); ?></h1>
 			<div id="test-project-app"></div>
-			<div>Option: <?php echo esc_html( $opt ); ?></div>
+			<div class="hide-if-js">
+				<?php esc_html_e( 'This page requires JavaScript to be enabled in your browser.', 'vuejs-challenge' ); ?>
+			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Load admin scripts.
+	 *
+	 * @param string $hook The current admin page.
+	 */
+	public function load_admin_scripts( $hook ) {
+
+		// Load scripts only on plugin settings page.
+		if ( 'toplevel_page_test-project-menu' !== $hook ) {
+			return;
+		}
+
+		// Script dependencies.
+		$asset_file = include Constants::$plugin_roots['plugin_dir_path'] . 'build/index.asset.php';
+
+		// Enqueue script.
+		wp_enqueue_script(
+			'test-project-app-js',
+			plugins_url( 'build/index.js', Constants::$plugin_roots['file'] ),
+			$asset_file['dependencies'],
+			$asset_file['version'],
+			true
+		);
+
+		// Enqueue style.
+		wp_enqueue_style(
+			'test-project-app-css',
+			plugins_url( 'build/index.css', Constants::$plugin_roots['file'] ),
+			array(),
+			$asset_file['version']
+		);
 	}
 }

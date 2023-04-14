@@ -27,3 +27,14 @@ if ( file_exists( __DIR__ . '/lib/autoload.php' ) ) {
 
 // Bootstrap the plugin.
 new Bootstrap( __FILE__ );
+
+/*
+
+Warning: include(C:\Users\dvgwy\Desktop\development\testing-stuff\vuejs-developer-applicant-challenge\includes\settings/build/index.asset.php): Failed to open stream: No such file or directory in C:\Users\dvgwy\Desktop\development\testing-stuff\vuejs-developer-applicant-challenge\includes\settings\class-plugin-settings.php on line 73
+
+Warning: include(): Failed opening 'C:\Users\dvgwy\Desktop\development\testing-stuff\vuejs-developer-applicant-challenge\includes\settings/build/index.asset.php' for inclusion (include_path='.:/usr/share/php:/www/wp-content/pear') in C:\Users\dvgwy\Desktop\development\testing-stuff\vuejs-developer-applicant-challenge\includes\settings\class-plugin-settings.php on line 73
+
+Warning: Trying to access array offset on value of type bool in C:\Users\dvgwy\Desktop\development\testing-stuff\vuejs-developer-applicant-challenge\includes\settings\class-plugin-settings.php on line 84
+
+Warning: Trying to access array offset on value of type bool in C:\Users\dvgwy\Desktop\development\testing-stuff\vuejs-developer-applicant-challenge\includes\settings\class-plugin-settings.php on line 85
+*/

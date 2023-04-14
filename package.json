@@ -1,0 +1,17 @@
+{
+    "name": "test-project-app",
+    "version": "0.0.1",
+    "author": "David Gwyer",
+    "license": "GPL-2.0-or-later",
+    "main": "build/index.js",
+    "devDependencies": {
+        "@wordpress/scripts": "^18.1.0"
+    },
+    "scripts": {
+        "build": "wp-scripts build",
+        "format": "wp-scripts format",
+        "lint:js": "wp-scripts lint-js",
+        "packages-update": "wp-scripts packages-update",
+        "start": "wp-scripts start"
+    }
+}
