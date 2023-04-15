@@ -1,7 +1,7 @@
 import { version } from "react";
 import { createRoot, render } from "@wordpress/element";
 import { App } from "./Components/App";
-import "./app.css";
+import "./app.scss";
 
 const domNode = document.getElementById('test-project-app');
 

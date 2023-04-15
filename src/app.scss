@@ -1,0 +1,79 @@
+#test-project-app {
+	form {
+		margin: 0;
+		padding: 0;
+		max-width: 400px;
+	}
+
+	.form-row {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		padding: 5px 0;
+
+		&.right {
+			flex: 1;
+			display: flex;
+			justify-content: flex-start;
+			margin-left: 100px;
+		}
+
+		&.save {
+			padding-top: 20px;
+		}
+	
+		label {
+			flex: 0 0 100px;
+		}
+
+		input, #emails {
+			flex: 0 0 auto;
+		}
+		
+		input[type="checkbox"] {
+			flex: 0 0 auto;
+		}
+	}
+
+	label {
+		//display: block;
+		//margin-bottom: 8px;
+	}
+
+	input[type="range"],
+	input[type="email"],
+	input[type="checkbox"] {
+		//display: block;
+		//width: 100%;
+		//padding: 8px;
+		//margin-bottom: 16px;
+		//font-size: 16px;
+	}
+
+	button {
+		//padding: 8px 16px;
+		//margin-right: 8px;
+		//font-size: 16px;
+	}
+
+	#emails {
+		button {
+			margin: 0;
+			padding: 0;
+		}
+
+		.email {
+			display: flex;
+			gap: 5px;
+			justify-content: space-between;
+			align-items: center;
+			//background-color: red;
+
+			button {
+				//height: auto;
+			}
+		}
+	} 
+}
+
+
