@@ -36,7 +36,7 @@ export const App = () => {
 		<>
 			{!data && !pluginOptions && <Spinner />}
 			{data && <div>
-				<div>{JSON.stringify(data)}</div>				
+				<div>{JSON.stringify(data)}</div>
 				<div>{JSON.stringify(pluginOptions)}</div>
 				<span>{__('Hello from JavaScript!', 'vuejs-challenge')}</span>
 				{/* <button onClick={getData}>Get data</button> */}

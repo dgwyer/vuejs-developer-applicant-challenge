@@ -5,7 +5,11 @@
     "license": "GPL-2.0-or-later",
     "main": "build/index.js",
     "devDependencies": {
-        "@wordpress/scripts": "^18.1.0"
+        "@wordpress/eslint-plugin": "^14.4.0",
+        "@wordpress/scripts": "^18.1.0",
+        "@wordpress/stylelint-config": "^21.14.0",
+        "eslint": "^8.38.0",
+        "stylelint": "^15.4.0"
     },
     "scripts": {
         "build": "wp-scripts build",
