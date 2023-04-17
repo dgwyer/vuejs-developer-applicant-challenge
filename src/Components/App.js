@@ -1,10 +1,12 @@
 import { __ } from '@wordpress/i18n';
-import { useEffect, useState } from '@wordpress/element';
-import { Spinner } from '@wordpress/components';
+import { useEffect, useState, useRef } from '@wordpress/element';
+import { Button, Spinner } from '@wordpress/components';
+const validator = require("email-validator");
 
 export const App = () => {
 	const [data, setData] = useState(null);
 	const [pluginOptions, setPluginOptions] = useState(null);
+	const addEmailRef = useRef(null);
 
 	useEffect(() => {
 		const getData = () => {
@@ -32,6 +34,53 @@ export const App = () => {
 
 	console.log(pluginOptions);
 
+	const updateRows = (event) => {
+		const numrows = event.target.value;
+		setPluginOptions({ ...pluginOptions, numrows: parseInt(numrows) });
+	};
+
+	const updateHumanDate = (event) => {
+		const humandate = event.target.checked;
+		console.log('res:', humandate);
+		setPluginOptions({ ...pluginOptions, humandate });
+	};
+
+	const addEmail = (event) => {
+		const emails = pluginOptions.emails;
+		const email = addEmailRef.current.value;
+
+		if (!email) {
+			alert('Email field is empty. Please enter a valid email address.');
+			return;
+		}
+
+		if (email && validator.validate(email)) {
+			emails.push(email);
+			setPluginOptions({ ...pluginOptions, emails });
+			addEmailRef.current.value = '';
+		} else {
+			alert('Invalid email. Please enter a valid email address.');
+		}
+	};
+
+	const deleteEmail = (event, index) => {
+		const emails = pluginOptions.emails;
+
+		emails.splice(index, 1);
+		console.log('resx:', index, emails);
+		setPluginOptions({ ...pluginOptions, emails });
+	};
+
+	const saveChanges = (event) => {
+		event.preventDefault();
+		const index = event.target.dataset.index;
+		const emails = pluginOptions.emails;
+
+		console.log('res2:', index, emails);
+		//emails.splice(index, 1);
+		//setPluginOptions({ ...pluginOptions, emails });
+	};
+
 	return (
 		<>
 			{!data && !pluginOptions && <Spinner />}
@@ -39,35 +88,44 @@ export const App = () => {
 				<div>{JSON.stringify(data)}</div>
 				<div>{JSON.stringify(pluginOptions)}</div>
 				<span>{__('Hello from JavaScript!', 'vuejs-challenge')}</span>
-				{/* <button onClick={getData}>Get data</button> */}
 
-				<form id="myForm">
+				<form id="pluginOptionsForm" onSubmit={saveChanges} autocomplete="chrome-off">
 					<div className="form-row">
 						<label for="rating">Rating (1-5):</label>
-						<input type="number" id="rating" name="rating" min="1" max="5" step="1" value={pluginOptions?.numrows} />
+						<input type="number" id="rating" name="rating" min="1" max="5" step="1"
+							value={pluginOptions?.numrows} onChange={updateRows} />
 					</div>
-					<div className="form-row">
+					<div className="form-row" style={{alignItems: "center"}}>
 						<label for="humandate">Human Date:</label>
-						<input type="checkbox" id="humandate" name="humandate" checked={pluginOptions?.humandate === true} />
+						<input type="checkbox" id="humandate" name="humandate" checked={pluginOptions?.humandate === true ? true : false} onChange={updateHumanDate} />
 					</div>
 					<div className="form-row">
 						<label for="emails">Emails:</label>
 						<div id="emails">
-							{pluginOptions?.emails.map((email, index) => {
+							{pluginOptions?.emails.length === 0 && <div>No emails found</div>}
+							{pluginOptions?.emails.length >= 1 && pluginOptions?.emails.map((email, index) => {
 								return (
 									<div className="email">
-										<input type="email" name="email[]" placeholder="Email 1" value={email} />
-										<button type="button" onclick="deleteEmail(0)" title="Delete email"><span class="dashicons dashicons-no"></span></button>
+										<input type="email" name="email" value={email} readOnly/>
+										<Button variant="secondary" onClick={e => deleteEmail(e, index)} title="Delete email"><span class="dashicons dashicons-no"></span></Button>
 									</div>
 								);
 							})}
 						</div>
 					</div>
-					<div className="form-row right">
-						<button type="button" onclick="addEmail()" title="Add a new email">Add Email</button>
-					</div>
+					{pluginOptions?.emails && pluginOptions?.emails.length <= 4 && (
+						<>
+							<div className="form-row right add-email">
+								<Button variant="secondary" onClick={addEmail} title="Add a new email">Add Email</Button>
+								<input ref={addEmailRef} type="email" id="add-email" />
+							</div>
+							<div className="right">
+								<div style={{ fontStyle: "italic" }}>Add up to 5 email addresses.</div>
+							</div>
+						</>
+					)}
 					<div className="form-row save">
-						<button type="button" onclick="saveChanges()">Save Changes</button>
+						<Button variant="primary" type="submit">Save Changes</Button>
 					</div>
 				</form>
 			</div>}

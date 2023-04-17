@@ -18,5 +18,8 @@
         "lint:js": "wp-scripts lint-js",
         "packages-update": "wp-scripts packages-update",
         "start": "wp-scripts start"
+    },
+    "dependencies": {
+        "email-validator": "^2.0.4"
     }
 }
