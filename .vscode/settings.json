@@ -10,9 +10,6 @@
 		"extends": "@wordpress/stylelint-config"
 	},
 	"eslint.enable": true,
-	"eslint.validate": [
-		"javascript"
-	],
 	"intelephense.stubs": [
 		"apache",
 		"bcmath",

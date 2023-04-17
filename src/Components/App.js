@@ -22,7 +22,7 @@ export const App = () => {
 			fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/get-plugin-settings/`)
 				.then(response => response.json())
 				.then(json => {
-					if(json.success) {
+					if (json.success) {
 						setPluginOptions(JSON.parse(json.data));
 					}
 				});
@@ -40,7 +40,7 @@ export const App = () => {
 				<div>{JSON.stringify(pluginOptions)}</div>
 				<span>{__('Hello from JavaScript!', 'vuejs-challenge')}</span>
 				{/* <button onClick={getData}>Get data</button> */}
-				
+
 				<form id="myForm">
 					<div className="form-row">
 						<label for="rating">Rating (1-5):</label>
@@ -70,7 +70,7 @@ export const App = () => {
 						<button type="button" onclick="saveChanges()">Save Changes</button>
 					</div>
 				</form>
-			</div>}			
+			</div>}
 		</>
 	);
 }
