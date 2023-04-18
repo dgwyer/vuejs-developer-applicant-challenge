@@ -28,9 +28,9 @@ class Routes {
 			'vuejs-challenge/v1',
 			'/get-api-data',
 			array(
-				'methods'              => 'GET',
-				'callback'             => array( $this, 'get_api_data' ),
-				'permissions_callback' => 'check_permissions',
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'get_api_data' ),
+				'permission_callback' => array( $this, 'check_permissions' ),
 			)
 		);
 
@@ -39,9 +39,9 @@ class Routes {
 			'vuejs-challenge/v1',
 			'/get-plugin-settings',
 			array(
-				'methods'              => 'GET',
-				'callback'             => array( $this, 'get_plugin_settings' ),
-				'permissions_callback' => 'check_permissions',
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'get_plugin_settings' ),
+				'permission_callback' => array( $this, 'check_permissions' ),
 			)
 		);
 
@@ -50,10 +50,10 @@ class Routes {
 			'vuejs-challenge/v1',
 			'/update-setting/(?P<setting>\w+)',
 			array(
-				'methods'              => 'POST',
-				'callback'             => array( $this, 'update_setting' ),
-				'permissions_callback' => 'check_permissions',
-				'args'                 => array(
+				'methods'             => 'POST',
+				'callback'            => array( $this, 'update_setting' ),
+				'permission_callback' => array( $this, 'check_permissions' ),
+				'args'                => array(
 					'setting' => array(
 						'sanitize_callback' => function( $param ) {
 							if ( 'numrows' === $param || 'humandate' === $param || 'emails' === $param ) {
@@ -126,6 +126,7 @@ class Routes {
 	public function update_setting( $request ) {
 		$setting = $request->get_param( 'setting' );
 		$value   = $request->get_param( 'value' );
+		$options = json_decode( get_option( 'test_project_option' ), true );
 
 		// For the 'numrows' setting, make sure it's an integer between 1 and 5.
 		if ( 'numrows' === $setting ) {
@@ -133,16 +134,18 @@ class Routes {
 			if ( $value < 1 || $value > 5 ) {
 				$value = 5;
 			}
+			$options['numrows'] = $value;
 		}
 
 		// For the 'humandate' setting, make sure it's a boolean.
 		if ( 'humandate' === $setting ) {
-			$value = filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+			$value                = filter_var( $value, FILTER_VALIDATE_BOOLEAN );
+			$options['humandate'] = $value;
 		}
 
 		// For the 'emails' setting, make sure that if it's an array then it's either an empty array or an array of email addresses.
 		if ( 'emails' === $setting ) {
-			if ( is_array( $value ) && ! empty( $value )) {
+			if ( is_array( $value ) && ! empty( $value ) ) {
 				$value = array_filter(
 					$value,
 					function( $email ) {
@@ -150,43 +153,19 @@ class Routes {
 					}
 				);
 			}
+			$options['emails'] = $value;
 		}
 
-		// Update the setting.
-		// $result = update_option( 'test_project_option', $setting );
+		// Update the setting and return if successful or not.
+		$result = update_option( 'test_project_option', wp_json_encode( $options ) );
 
 		return new \WP_REST_Response(
 			array(
-				'success' => true,
-				// 'data'    => $result,
-				// 'result'  => $result,
+				'success' => $result,
 				'setting' => $setting,
 				'value'   => $value,
+				'options' => $options,
 			)
-		);
-	}
-
-	/**
-	 * Sanitize the update settings request.
-	 *
-	 * @param \WP_REST_Request $request Request object.
-	 * @return array
-	 */
-	public function sanitize_update_settings( $request ) {
-		$setting = $request->get_param( 'setting' );
-		$value   = $request->get_param( 'value' );
-
-		return false;
-
-		// Sanitize the setting.
-		$setting = sanitize_text_field( $setting );
-
-		// Sanitize the value.
-		$value = sanitize_text_field( $value );
-
-		return array(
-			'setting' => $setting,
-			'value'   => $value,
 		);
 	}
 
@@ -196,6 +175,10 @@ class Routes {
 	 * @return bool
 	 */
 	public function check_permissions() {
-		return current_user_can( 'manage_options' );
+		if ( isset( $_SERVER['HTTP_X_WP_NONCE'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_SERVER['HTTP_X_WP_NONCE'] ) ), 'wp_rest' ) ) {
+			return \current_user_can( 'manage_options' );
+		}
+
+		return current_user_can( false );
 	}
 }

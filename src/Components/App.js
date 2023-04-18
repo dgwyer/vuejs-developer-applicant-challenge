@@ -7,10 +7,15 @@ export const App = () => {
 	const [data, setData] = useState(null);
 	const [pluginOptions, setPluginOptions] = useState(null);
 	const addEmailRef = useRef(null);
+	const fetchArgs = {
+		headers: {
+			'X-WP-Nonce': window.testProjectApp.nonce,
+		}
+	};
 
 	useEffect(() => {
 		const getData = () => {
-			fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/get-api-data/`)
+			fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/get-api-data/`, fetchArgs)
 				.then(response => response.json())
 				.then(json => {
 					setData(json);
@@ -21,7 +26,7 @@ export const App = () => {
 
 	useEffect(() => {
 		const getData = () => {
-			fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/get-plugin-settings/`)
+			fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/get-plugin-settings/`, fetchArgs)
 				.then(response => response.json())
 				.then(json => {
 					if (json.success) {
@@ -32,30 +37,54 @@ export const App = () => {
 		getData();
 	}, [setPluginOptions]);
 
-	console.log(pluginOptions);
-
 	const updateRows = (event) => {
-		const numrows = event.target.value;
+		const numrows = parseInt(event.target.value);
+		const fetchArgs = {
+			method: 'POST',
+			headers: {
+				'X-WP-Nonce': window.testProjectApp.nonce,
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ value: numrows })
+		};
+		fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/update-setting/numrows`, fetchArgs);
 		setPluginOptions({ ...pluginOptions, numrows: parseInt(numrows) });
 	};
 
 	const updateHumanDate = (event) => {
 		const humandate = event.target.checked;
-		console.log('res:', humandate);
+		const fetchArgs = {
+			method: 'POST',
+			headers: {
+				'X-WP-Nonce': window.testProjectApp.nonce,
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ value: humandate })
+		};
+		fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/update-setting/humandate`, fetchArgs);
 		setPluginOptions({ ...pluginOptions, humandate });
 	};
 
 	const addEmail = (event) => {
-		const emails = pluginOptions.emails;
-		const email = addEmailRef.current.value;
+		const emails = [...pluginOptions.emails];
+		const newEmail = addEmailRef.current.value;
 
-		if (!email) {
+		if (!newEmail) {
 			alert('Email field is empty. Please enter a valid email address.');
 			return;
 		}
 
-		if (email && validator.validate(email)) {
-			emails.push(email);
+		if (newEmail && validator.validate(newEmail)) {
+			emails.push(newEmail);
+			const fetchArgs = {
+				method: 'POST',
+				headers: {
+					'X-WP-Nonce': window.testProjectApp.nonce,
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ value: emails })
+			};
+			fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/update-setting/emails`, fetchArgs);
 			setPluginOptions({ ...pluginOptions, emails });
 			addEmailRef.current.value = '';
 		} else {
@@ -64,21 +93,19 @@ export const App = () => {
 	};
 
 	const deleteEmail = (event, index) => {
-		const emails = pluginOptions.emails;
-
+		const emails = [...pluginOptions.emails];
 		emails.splice(index, 1);
-		console.log('resx:', index, emails);
+
+		const fetchArgs = {
+			method: 'POST',
+			headers: {
+				'X-WP-Nonce': window.testProjectApp.nonce,
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ value: emails })
+		};
+		fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/update-setting/emails`, fetchArgs);
 		setPluginOptions({ ...pluginOptions, emails });
-	};
-
-	const saveChanges = (event) => {
-		event.preventDefault();
-		const index = event.target.dataset.index;
-		const emails = pluginOptions.emails;
-
-		console.log('res2:', index, emails);
-		//emails.splice(index, 1);
-		//setPluginOptions({ ...pluginOptions, emails });
 	};
 
 	return (
@@ -89,13 +116,13 @@ export const App = () => {
 				<div>{JSON.stringify(pluginOptions)}</div>
 				<span>{__('Hello from JavaScript!', 'vuejs-challenge')}</span>
 
-				<form id="pluginOptionsForm" onSubmit={saveChanges} autocomplete="chrome-off">
+				<form id="pluginOptionsForm">
 					<div className="form-row">
 						<label for="rating">Rating (1-5):</label>
 						<input type="number" id="rating" name="rating" min="1" max="5" step="1"
 							value={pluginOptions?.numrows} onChange={updateRows} />
 					</div>
-					<div className="form-row" style={{alignItems: "center"}}>
+					<div className="form-row" style={{ alignItems: "center" }}>
 						<label for="humandate">Human Date:</label>
 						<input type="checkbox" id="humandate" name="humandate" checked={pluginOptions?.humandate === true ? true : false} onChange={updateHumanDate} />
 					</div>
@@ -106,7 +133,7 @@ export const App = () => {
 							{pluginOptions?.emails.length >= 1 && pluginOptions?.emails.map((email, index) => {
 								return (
 									<div className="email">
-										<input type="email" name="email" value={email} readOnly/>
+										<input type="email" name="email" value={email} readOnly />
 										<Button variant="secondary" onClick={e => deleteEmail(e, index)} title="Delete email"><span class="dashicons dashicons-no"></span></Button>
 									</div>
 								);
@@ -124,9 +151,6 @@ export const App = () => {
 							</div>
 						</>
 					)}
-					<div className="form-row save">
-						<Button variant="primary" type="submit">Save Changes</Button>
-					</div>
 				</form>
 			</div>}
 		</>

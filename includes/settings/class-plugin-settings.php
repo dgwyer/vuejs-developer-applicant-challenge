@@ -85,7 +85,8 @@ class Plugin_Settings {
 			'test-project-app-js',
 			'window.testProjectApp = ' . \wp_json_encode(
 				array(
-					'site' => \esc_url_raw( \get_site_url() ),
+					'site'  => esc_url_raw( \get_site_url() ),
+					'nonce' => wp_create_nonce( 'wp_rest' ),
 				)
 			),
 			'before'
