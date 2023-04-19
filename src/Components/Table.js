@@ -7,7 +7,7 @@ export const Table = (props) => {
 	return (numrows &&
 		<div id="table">
 			<h2>{data?.table?.title}</h2>
-			<table>
+			<table className="wp-list-table widefat fixed striped table-view-list">
 				<thead>
 					<tr>
 						{data?.table?.data?.headers.map((header) => {
@@ -33,14 +33,23 @@ export const Table = (props) => {
 						);
 					})}
 				</tbody>
+				<tfoot>
+					<tr>
+						{data?.table?.data?.headers.map((header) => {
+							return (
+								<th key={header.toLowerCase()}>{header}</th>
+							);
+						})}
+					</tr>
+				</tfoot>
 			</table>
-			<div>
+			<div className="list-emails">
 				{pluginOptions?.emails && (
 					<>
 						<h2>Emails</h2>
 						<ul>
 							{pluginOptions?.emails.map(email => {
-								return <li key={uuidv4()}>{email}</li>;
+								return <li key={uuidv4()}><span class="dashicons dashicons-email"></span>{email}</li>;
 							})}
 						</ul>
 					</>

@@ -80,7 +80,7 @@ export const Settings = (props) => {
 	return (
 		<form id="pluginOptionsForm">
 			<div className="form-row">
-				<label for="rating">Rating (1-5):</label>
+				<label for="rating">Number of rows:</label>
 				<input type="number" id="rating" name="rating" min="1" max="5" step="1"
 					value={pluginOptions?.numrows} onChange={updateRows} />
 			</div>

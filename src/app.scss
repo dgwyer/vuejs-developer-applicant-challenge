@@ -1,4 +1,58 @@
+#wpcontent {
+	.wrap {
+		margin: 0;
+
+		h1 {
+			padding: 20px 0 20px 25px;
+		}
+	}
+	
+	padding-left: 0 !important;
+	position: relative;
+}
+
 #test-project-app {
+	h2 {
+		color: #222;
+		font-size: 20px;
+		font-weight: 600;
+		margin: 0 0 15px 0;
+	}
+	button {
+		font-size: 13px;
+		font-weight: 600;
+		padding: 8px 12px;
+		min-height: 35px;		
+
+		background-color: #e27730;
+		border-color: #e27730;
+		color: #fff;
+
+		box-sizing: border-box;
+		border: 0;
+		border-radius: 3px;
+		cursor: pointer;
+		display: inline-block;
+		margin: 0;
+		text-decoration: none;
+		text-align: center;
+		vertical-align: middle;
+		white-space: nowrap;
+		text-shadow: none;
+		box-shadow: none;
+		outline: none;
+	}
+
+	button:hover, button:active, button:focus {
+		background-color: #b85a1b;
+		border-color: #b85a1b;
+		color: #fff;
+	}
+
+	button:focus {
+		box-shadow: 0 0 0 1px #fff, 0 0 0 3px #b85a1b;
+	}
+
 	form {
 		margin: 0;
 		padding: 0;
@@ -35,27 +89,6 @@
 		}
 	}
 
-	label {
-		//display: block;
-		//margin-bottom: 8px;
-	}
-
-	input[type="range"],
-	input[type="email"],
-	input[type="checkbox"] {
-		//display: block;
-		//width: 100%;
-		//padding: 8px;
-		//margin-bottom: 16px;
-		//font-size: 16px;
-	}
-
-	button {
-		//padding: 8px 16px;
-		//margin-right: 8px;
-		//font-size: 16px;
-	}
-
 	#emails {
 		button {
 			margin: 0;
@@ -70,22 +103,18 @@
 			padding-bottom: 10px;
 
 			button {
-				height: 28px;
-				width: 28px;
+				background-color: transparent;
+				border: none;
+				color: #414141;
 			}
 		}
 	}
 
 	.add-email {
-		//margin-top: 10px;
 		display: flex;
 		gap: 5px;
 		justify-content: space-between;
 		align-items: flex-start;
-
-		button {
-				height: 28px;
-		}
 	}
 
 	.right {
@@ -93,27 +122,43 @@
 	}
 	
 	#tabs {
-		.tabs-titles{
-			list-style: none;
-			padding: 0px;
-			margin: 0;
+		.tab-titles{
+			min-height: 58px;
+			background-color: #fff;
+			font-size: 14px;
+			margin: 0 0 30px 0;
+			padding: 0 20px;
 		}
 		.tab-title{
-			background-color: #fff;
+			border-bottom: 2px solid #fff;
+			box-shadow: none;
+			color: #666;
 			display: inline-block;
-			padding: 10px;
-			color: #c7c6c2;
+			margin-right: 30px;
+			padding: 20px 0 18px 0;
+			text-decoration: none;
 			cursor: pointer;
-			margin-left:1px;
 		}
-		.tab-title--active {
-			background-color: #f5f5f5;
-			color: #00070a;
+		.tab-title-active {
+			border-bottom: 2px solid #e27730;
 		}
+
+		.tab-title:hover {
+			border-color: #999;
+		}
+
 		.tab-content{
-			background-color: #f5f5f5;
-			padding: 5px;
-			margin: 0;
+			padding: 0 20px;
+		}
+	}
+
+	.list-emails {
+		margin-top: 25px;
+
+		li {
+			span {
+				margin-right: 10px;
+			}
 		}
 	}
 }

@@ -23,6 +23,13 @@ export const Graph = (props) => {
 	return (
 		<div id="graph">
 			<svg width="400" height="320">
+				<rect
+					x="20"
+					y="20"
+					width="400"
+					height="230"
+					fill="rgba(255,255,255,0.4)"
+				/>
 				{Object.values(data?.graph).map((bar, index) => {
 					return <g key={uuidv4()}>
 						<rect
@@ -48,17 +55,17 @@ export const Graph = (props) => {
 							x={45 + index * offset}
 							y={245 - (bar.value * 200) / maxValue}
 							textAnchor="middle"
-							fill="#3498db"
-							fontSize="14"
+							fill="black"
+							fontSize="12"
 						>
 							{bar.value}
 						</text>
 					</g>;
 				})}
-				<line x1="20" y1="250" x2="20" y2="20" stroke="black" strokeWidth="2" />
-				<line x1="20" y1="250" x2="600" y2="250" stroke="black" strokeWidth="2" />
+				<line x1="20" y1="250" x2="20" y2="20" stroke="black" strokeWidth="1" />
+				<line x1="20" y1="250" x2="600" y2="250" stroke="black" strokeWidth="1" />
 				<text x="10" y="120" textAnchor="middle" fill="black" fontSize="14" transform="rotate(-90, 10, 120)" fontWeight="bold">Value</text>
-				<text x="220" y="310" textAnchor="middle" fill="black" fontSize="14" fontWeight="bold">Date</text>
+				<text x="210" y="310" textAnchor="middle" fill="black" fontSize="14" fontWeight="bold">Date</text>
 			</svg>
 			<div><button onClick={refreshData} title="Refresh chart data">Refresh</button></div>			
 		</div>

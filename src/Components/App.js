@@ -16,7 +16,7 @@ const Tabs = props => {
 	};
 
 	const titles = tabData.map((item) =>
-		<li onClick={() => handleTabClick(item.id)} className={activeTab === item.id ? "tab-title tab-title--active" : "tab-title"}>{item.tabTitle}</li>
+		<a onClick={() => handleTabClick(item.id)} className={activeTab === item.id ? "tab-title tab-title-active" : "tab-title"}>{item.tabTitle}</a>
 	);
 	const content = tabData.map((item) =>
 		<p style={activeTab === item.id ? {} : { display: 'none' }}>{item.tabContent}</p>
@@ -24,9 +24,9 @@ const Tabs = props => {
 
 	return (
 		<div id="tabs">
-			<ul className="tab-titles">
+			<div className="tab-titles">
 				{titles}
-			</ul>
+			</div>
 			<div className="tab-content">
 				{content}
 			</div>
