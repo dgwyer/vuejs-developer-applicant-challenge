@@ -44,7 +44,10 @@ Here are some things you can do to test out the app!
 Some other comments I noted down during development of the app.
 
 - A spinner is shown when the app first loads and is waiting for data, **and** when the chart data is manually refreshed.
-- If JavaScript isn't enabled in the browser then the app isn't loaded and a warning message is displayed.
+- If JavaScript isn't enabled in the browser then the app isn't loaded and a warning message is displayed, as shown in the following screenshot.
+
+![image](https://user-images.githubusercontent.com/1482075/233111292-f2061de5-7c4f-48af-a77c-f6afc1d79d93.png)
+
 - Endpoints:
   - For the `update-setting/[numrows|humandate|emails]` endpoint:
     - The setting name is sanitized (it has to be either `numrows`, `humandate`, or `emails`). Otherwise a WP_Error is thrown.
