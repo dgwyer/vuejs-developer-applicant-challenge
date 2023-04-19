@@ -51,7 +51,7 @@ class Plugin_Settings {
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Test Project Settings', 'vuejs-challenge' ); ?></h1>
 			<div id="test-project-app"></div>
-			<div class="hide-if-js">
+			<div class="hide-if-js" style="margin-left:25px;">
 				<?php esc_html_e( 'This page requires JavaScript to be enabled in your browser.', 'vuejs-challenge' ); ?>
 			</div>
 		</div>
