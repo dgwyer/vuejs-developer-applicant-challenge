@@ -76,7 +76,7 @@ export const App = () => {
 		{
 			id: 'graph',
 			tabTitle: "Graph",
-			tabContent: <Graph data={data} pluginOptions={pluginOptions} />
+			tabContent: <Graph data={data} setData={setData} pluginOptions={pluginOptions} />
 		},
 		{
 			id: 'settings',

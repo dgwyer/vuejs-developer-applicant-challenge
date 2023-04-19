@@ -34,6 +34,17 @@ class Routes {
 			)
 		);
 
+		// Route to get fresh data from an external API.
+		register_rest_route(
+			'vuejs-challenge/v1',
+			'/refresh-api-data',
+			array(
+				'methods'             => 'GET',
+				'callback'            => array( $this, 'refresh_api_data' ),
+				'permission_callback' => array( $this, 'check_permissions' ),
+			)
+		);
+
 		// Route to get all plugin settings.
 		register_rest_route(
 			'vuejs-challenge/v1',
@@ -69,11 +80,27 @@ class Routes {
 	}
 
 	/**
-	 * Get data from an external API no more than once per hour.
+	 * Get fresh data from an external API.
 	 *
-	 * @return array
+	 * @return mixed
 	 */
-	public function get_api_data() {
+	public function refresh_api_data() {
+		return $this->get_api_data( true );
+	}
+
+	/**
+	 * Get data from an external API no more than once per hour unless specified.
+	 *
+	 * @param bool $refresh Whether to refresh the data or not.
+	 *
+	 * @return mixed
+	 */
+	public function get_api_data( $refresh = false ) {
+		if ( true === $refresh ) {
+			// If the data should be refreshed, delete the cached data.
+			delete_transient( 'get_api_data' );
+		}
+
 		$cache_key   = 'get_api_data';
 		$cached_data = get_transient( $cache_key );
 
@@ -86,7 +113,7 @@ class Routes {
 				// Get the API response body.
 				$api_response = wp_remote_retrieve_body( $response );
 
-				// Store the API response in cache for 1 hour (3600 seconds).
+				// Store the API response in cache for up to 1 hour.
 				set_transient( $cache_key, $api_response, 3600 );
 
 				// Return the API response.

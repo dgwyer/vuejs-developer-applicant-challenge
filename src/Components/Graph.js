@@ -1,15 +1,30 @@
-export const Graph = (props) => {
-	const { data } = props;
+import { v4 as uuidv4 } from 'uuid';
 
-	// Convert indexed object with numbered keys, to an array of values and return the max value.
+export const Graph = (props) => {
+	const { data, setData } = props;
+
+	// Convert indexed data object with numbered keys, to an array of values and return the max value.
 	const maxValue = Math.max(...Object.values(data?.graph).map(bar => bar.value));
 	const offset = 55;
 
+	const refreshData = () => {
+		const fetchArgs = {
+			headers: {
+				'X-WP-Nonce': window.testProjectApp.nonce,
+			}
+		};
+		fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/refresh-api-data/`, fetchArgs)
+			.then(response => response.json())
+			.then(json => {
+				setData(JSON.parse(json));
+			});
+	};
+
 	return (
-		<div id="table">
+		<div id="graph">
 			<svg width="400" height="320">
 				{Object.values(data?.graph).map((bar, index) => {
-					return <g key={index}>
+					return <g key={uuidv4()}>
 						<rect
 							x={20 + index * offset}
 							y={250 - (bar.value * 200) / maxValue}
@@ -31,9 +46,9 @@ export const Graph = (props) => {
 						</text>
 						<text
 							x={45 + index * offset}
-							y={270 - (bar.value * 200) / maxValue}
+							y={245 - (bar.value * 200) / maxValue}
 							textAnchor="middle"
-							fill="white"
+							fill="#3498db"
 							fontSize="14"
 						>
 							{bar.value}
@@ -45,6 +60,7 @@ export const Graph = (props) => {
 				<text x="10" y="120" textAnchor="middle" fill="black" fontSize="14" transform="rotate(-90, 10, 120)" fontWeight="bold">Value</text>
 				<text x="220" y="310" textAnchor="middle" fill="black" fontSize="14" fontWeight="bold">Date</text>
 			</svg>
+			<div><button onClick={refreshData} title="Refresh chart data">Refresh</button></div>			
 		</div>
 	);
 };
