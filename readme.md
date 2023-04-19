@@ -8,6 +8,8 @@ This is the repository for my solution to the [VueJS Developer Applicant Challen
 
 I used Node v18.18.1 during development. A similar version is recommended when installing dependencies to avoid any issues.
 
+The plugin was developed and tested running on WordPress 6.2 without the Gutenberg plugin installed.
+
 Follow these steps to installing the plugin:
 1. Clone the repository to a location inside the `wp-content/plugins` folders of your local WordPress site.
 2. Run `npm install` and then `composer install` from a terminal inside the root plugin directory.
@@ -49,7 +51,7 @@ Some other comments I noted down during development of the app.
     - In the request callback, the value of the setting **data** is also sanitized for correct values. e.g. numrows has to be between 1-5, non-valid email addresses are stripped out, and humandate is set to true if not a boolean.
   - All custom REST API endpoints have a permissions callback to check the current user can manage options (i.e. is an admin), and there is also a nonce check to prevent cross-site request forgery attacks.
   - The endpoint data from an external API doesn't request new data more than once per hour no matter how many times it is called.
-- The active tab persists when refreshing the page via localStorage.
+  - All endpoints have been thoroughly tested using hoppscotch.io.
 - Settings tab:
   - Only valid email addresses can be added. I used a small [npm package](https://www.npmjs.com/package/email-validator) to do the validation.
   - Changes to form settings are updated in local application state immediately and in the database via REST API endpoint requests. If you change any of the form fields (or multiple form fields) and refresh the page you'll see the changes persist.
@@ -62,3 +64,4 @@ Some other comments I noted down during development of the app.
   - Basic responsive styles have also been added to make the tab content render appropriately at various viewport widths.
   - All styles are prefixed (via Sass) to reduce any conflicts with core WordPress styles.
 - A custom autoloader used to include PHP files.
+- The active tab persists when refreshing the page via localStorage.
