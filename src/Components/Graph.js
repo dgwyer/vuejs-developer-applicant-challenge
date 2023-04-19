@@ -1,13 +1,17 @@
+import { useState } from '@wordpress/element';
+import { Spinner } from '@wordpress/components';
 import { v4 as uuidv4 } from 'uuid';
 
 export const Graph = (props) => {
 	const { data, setData } = props;
+	const [spinnerVisible, setSpinnerVisible] = useState(false);
 
 	// Convert indexed data object with numbered keys, to an array of values and return the max value.
 	const maxValue = Math.max(...Object.values(data?.graph).map(bar => bar.value));
 	const offset = 55;
 
-	const refreshData = () => {
+	const refreshData = async () => {
+		setSpinnerVisible(true);
 		const fetchArgs = {
 			headers: {
 				'X-WP-Nonce': window.testProjectApp.nonce,
@@ -17,6 +21,7 @@ export const Graph = (props) => {
 			.then(response => response.json())
 			.then(json => {
 				setData(JSON.parse(json));
+				setSpinnerVisible(false);
 			});
 	};
 
@@ -67,7 +72,10 @@ export const Graph = (props) => {
 				<text x="10" y="120" textAnchor="middle" fill="black" fontSize="14" transform="rotate(-90, 10, 120)" fontWeight="bold">Value</text>
 				<text x="210" y="310" textAnchor="middle" fill="black" fontSize="14" fontWeight="bold">Date</text>
 			</svg>
-			<div><button onClick={refreshData} title="Refresh chart data">Refresh</button></div>			
+			<div>
+				<button onClick={refreshData} title="Refresh chart data">Refresh</button>
+			</div>
+			{spinnerVisible && <div className="graph-spinner-wrapper"><Spinner /></div>}
 		</div>
 	);
 };

@@ -87,7 +87,7 @@ export const App = () => {
 
 	return (
 		<>
-			{!data && !pluginOptions && <Spinner />}
+			{!data && !pluginOptions && <div className="spinner-wrapper"><Spinner /></div>}
 			{data && <div>
 				<Tabs tabData={tabData} />
 			</div>}

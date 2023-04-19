@@ -47,6 +47,7 @@ export const Table = (props) => {
 				{pluginOptions?.emails && (
 					<>
 						<h2>Emails</h2>
+						{pluginOptions?.emails.length === 0 && <div>No emails found.</div>}
 						<ul>
 							{pluginOptions?.emails.map(email => {
 								return <li key={uuidv4()}><span class="dashicons dashicons-email"></span>{email}</li>;

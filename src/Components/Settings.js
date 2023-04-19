@@ -80,39 +80,45 @@ export const Settings = (props) => {
 	return (
 		<form id="pluginOptionsForm">
 			<div className="form-row">
-				<label for="rating">Number of rows:</label>
-				<input type="number" id="rating" name="rating" min="1" max="5" step="1"
+				<div className="label-wrapper"><label for="rating">Number of rows</label></div>
+				<div className="label-field"><input type="number" id="rating" name="rating" min="1" max="5" step="1"
 					value={pluginOptions?.numrows} onChange={updateRows} />
+					<p className="desc">Number of rows displayed in the table (1-5).</p>
+				</div>
 			</div>
 			<div className="form-row" style={{ alignItems: "center" }}>
-				<label for="humandate">Human Date:</label>
-				<input type="checkbox" id="humandate" name="humandate" checked={pluginOptions?.humandate === true ? true : false} onChange={updateHumanDate} />
+				<div className="label-wrapper">Human Date</div>
+				<div className="label-field"><input type="checkbox" id="humandate" name="humandate" checked={pluginOptions?.humandate === true ? true : false} onChange={updateHumanDate} />
+					<label for="humandate">&nbsp;Date Format</label>
+					<p className="desc">When checked, a human readable date is used in the table.</p>
+				</div>
 			</div>
 			<div className="form-row">
-				<label for="emails">Emails:</label>
-				<div id="emails">
-					{pluginOptions?.emails.length === 0 && <div>No emails found</div>}
+				<div className="label-wrapper">Emails</div>
+				<div className="label-field" id="emails">
+					{pluginOptions?.emails.length === 0 && <div>No emails found. Add one or more emails via the text field below.</div>}
 					{pluginOptions?.emails.length >= 1 && pluginOptions?.emails.map((email, index) => {
 						return (
 							<div className="email">
 								<input type="email" name="email" value={email} readOnly />
-								<Button variant="secondary" onClick={e => deleteEmail(e, index)} title="Delete email"><span class="dashicons dashicons-no"></span></Button>
+								<div className="delete-email" role="button" variant="secondary" onClick={e => deleteEmail(e, index)} title="Delete email"><span class="dashicons dashicons-no"></span></div>
 							</div>
 						);
 					})}
+					{pluginOptions?.emails && pluginOptions?.emails.length <= 4 && (
+						<>
+							<hr className="hr-sep" />
+							<div className="add-email">
+								<input ref={addEmailRef} type="email" id="add-email" />
+								<Button variant="secondary" onClick={addEmail} title="Add a new email">Add Email</Button>
+							</div>
+							<div>
+								<p className="desc">Add up to 5 email addresses. These are also displayed on the Table tab.</p>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
-			{pluginOptions?.emails && pluginOptions?.emails.length <= 4 && (
-				<>
-					<div className="form-row right add-email">
-						<Button variant="secondary" onClick={addEmail} title="Add a new email">Add Email</Button>
-						<input ref={addEmailRef} type="email" id="add-email" />
-					</div>
-					<div className="right">
-						<div style={{ fontStyle: "italic" }}>Add up to 5 email addresses.</div>
-					</div>
-				</>
-			)}
 		</form>
 	);
 }
