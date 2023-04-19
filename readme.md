@@ -65,3 +65,11 @@ Some other comments I noted down during development of the app.
   - All styles are prefixed (via Sass) to reduce any conflicts with core WordPress styles.
 - A custom autoloader used to include PHP files.
 - The active tab persists when refreshing the page via localStorage.
+- The React app is initialized differently depending on the installed version. This is needed as WordPress 6.2 ships with React 18 and requires React to be initialized slightly differently than for previous versions. Incidentally, I have an open [Gutenberg PR](https://github.com/WordPress/gutenberg/pull/49312) related to this.
+
+# Potential Further Work
+
+- Check for duplicate emails.
+- Allow individual email editing.
+- Chart formatting options.
+- Add testing (e2e, unit etc.).
