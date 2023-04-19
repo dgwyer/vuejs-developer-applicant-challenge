@@ -75,4 +75,5 @@ Some other comments I noted down during development of the app.
 - Check for duplicate emails.
 - Allow individual email editing.
 - Chart formatting options.
+- Optimize styles.
 - Add testing (e2e, unit etc.).
