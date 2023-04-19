@@ -231,6 +231,10 @@
 	.delete-email {
 		display: inline-block;
 		cursor: pointer;
+
+		span:hover {
+			color: #c00e0e;
+		}
 	}
 
 	.desc {

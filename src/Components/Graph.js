@@ -27,6 +27,7 @@ export const Graph = (props) => {
 
 	return (
 		<div id="graph">
+			<h2>Bar Chart</h2>
 			<svg width="400" height="320">
 				<rect
 					x="20"
