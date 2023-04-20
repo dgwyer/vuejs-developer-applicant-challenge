@@ -6,7 +6,7 @@ This is the repository for my solution to the [VueJS Developer Applicant Challen
 
 # Plugin Installation & Activation
 
-I used Node v18.18.1 during development. A similar version is recommended when installing dependencies to avoid any issues.
+I used Node v14.18.1 during development. A similar version is recommended when installing dependencies to avoid any issues.
 
 The plugin was developed and tested running on WordPress 6.2 without the Gutenberg plugin installed.
 
