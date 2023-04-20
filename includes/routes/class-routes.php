@@ -134,7 +134,6 @@ class Routes {
 	 * @return array
 	 */
 	public function get_plugin_settings() {
-
 		$value = get_option( 'test_project_option', null );
 		return new \WP_REST_Response(
 			array(

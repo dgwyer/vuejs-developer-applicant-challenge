@@ -53,33 +53,11 @@
 		box-shadow: 0 0 0 1px #fff, 0 0 0 3px #b85a1b;
 	}
 
-	form {
-		// margin: 0;
-		// padding: 0;
-		// max-width: 400px;
-	}
-
 	.form-row {
 		border-bottom: 1px solid #e4e4e4;
 		padding: 30px 0;
 		font-size: 14px;
 		line-height: 1.3;
-		// display: flex;
-		// justify-content: flex-start;
-		// align-items: flex-start;
-		// padding: 10px 0;
-
-		&.right {
-			// flex: 1;
-			// display: flex;
-			// justify-content: flex-start;
-			// margin-left: 100px;
-		}
-	
-		label {
-			//display: block;
-			// flex: 0 0 100px;
-		}
 
 		.label-wrapper {
 			display: block;
@@ -106,14 +84,6 @@
 			}
 		}
 
-		input, #emails {
-			// flex: 0 0 auto;
-		}
-		
-		input[type="checkbox"] {
-			// flex: 0 0 auto;
-		}
-
 		input[type="email"] {
 			background-color: #fff;
 			border: 1px solid #999;
@@ -131,23 +101,8 @@
 	}
 
 	#emails {
-		button {
-			//margin: 0;
-			//padding: 0;
-		}
-
 		.email {
-			//display: flex;
-			//gap: 5px;
-			//justify-content: space-between;
-			//align-items: center;
 			padding-bottom: 10px;
-
-			button {
-				//background-color: transparent;
-				//border: none;
-				//color: #414141;
-			}
 
 			input[type="email"] {
 				background-color: #ededed;
@@ -156,20 +111,11 @@
 	}
 
 	.add-email {
-		//display: flex;
-		//gap: 5px;
-		//justify-content: space-between;
-		//align-items: flex-start;
-
 		input[type="email"], button {
 			@media (max-width: 781px) {
 				margin-bottom: 10px;
 			}
 		}
-	}
-
-	.right {
-		//margin-left: 100px;
 	}
 	
 	#tabs {

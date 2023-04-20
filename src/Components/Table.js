@@ -1,3 +1,4 @@
+import { __ } from '@wordpress/i18n';
 import { v4 as uuidv4 } from 'uuid';
 
 export const Table = (props) => {
@@ -46,8 +47,8 @@ export const Table = (props) => {
 			<div className="list-emails">
 				{pluginOptions?.emails && (
 					<>
-						<h2>Emails</h2>
-						{pluginOptions?.emails.length === 0 && <div>No emails found.</div>}
+						<h2>{__('Emails', 'vuejs-challenge')}</h2>
+						{pluginOptions?.emails.length === 0 && <div>{__('No emails found.', 'vuejs-challenge')}</div>}
 						<ul>
 							{pluginOptions?.emails.map(email => {
 								return <li key={uuidv4()}><span class="dashicons dashicons-email"></span>{email}</li>;

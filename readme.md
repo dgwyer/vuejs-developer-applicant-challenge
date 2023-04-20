@@ -66,14 +66,19 @@ Some other comments I noted down during development of the app.
   - CSS has been added to match the [WP Mail SMTP](https://wordpress.org/plugins/wp-mail-smtp/) plugin styles as closely as possible.
   - Basic responsive styles have also been added to make the tab content render appropriately at various viewport widths.
   - All styles are prefixed (via Sass) to reduce any conflicts with core WordPress styles.
+- All PHP and JavaScript strings are wrapped with the appropriate i18n functions.
 - A custom autoloader used to include PHP files.
 - The active tab persists when refreshing the page via localStorage.
 - The React app is initialized differently depending on the installed version. This is needed as WordPress 6.2 ships with React 18 and requires React to be initialized slightly differently than for previous versions. Incidentally, I have an open [Gutenberg PR](https://github.com/WordPress/gutenberg/pull/49312) related to this.
 
-# Potential Further Work
+# Further Work
+
+Some ideas for improving the app in the future:
 
 - Check for duplicate emails.
 - Allow individual email editing.
 - Chart formatting options.
+- Add a button on the table tab to refresh the data. Or maybe have an icon on the tab bar to the right to do this so it's tab agnostic.
 - Optimize styles.
+- Accessibility.
 - Add testing (e2e, unit etc.).

@@ -5,7 +5,7 @@
  * @param string $class_name The name of the class to load.
  * @return void
  *
- * @package WPGO_Plugins\Wordpress_Apis_Demo
+ * @package VueJSDeveloperChallenge
  */
 
 spl_autoload_register(

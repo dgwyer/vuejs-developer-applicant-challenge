@@ -1,5 +1,7 @@
 import { useState } from '@wordpress/element';
 import { Spinner } from '@wordpress/components';
+import { fetchArgs } from '../utility/network';
+import { __ } from '@wordpress/i18n';
 import { v4 as uuidv4 } from 'uuid';
 
 export const Graph = (props) => {
@@ -12,12 +14,7 @@ export const Graph = (props) => {
 
 	const refreshData = async () => {
 		setSpinnerVisible(true);
-		const fetchArgs = {
-			headers: {
-				'X-WP-Nonce': window.testProjectApp.nonce,
-			}
-		};
-		fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/refresh-api-data/`, fetchArgs)
+		fetch(`${window.testProjectApp.site}/wp-json/vuejs-challenge/v1/refresh-api-data/`, fetchArgs())
 			.then(response => response.json())
 			.then(json => {
 				setData(JSON.parse(json));
@@ -27,7 +24,7 @@ export const Graph = (props) => {
 
 	return (
 		<div id="graph">
-			<h2>Bar Chart</h2>
+			<h2>{__('Bar Chart', 'vuejs-challenge')}</h2>
 			<svg width="400" height="320">
 				<rect
 					x="20"
@@ -70,11 +67,11 @@ export const Graph = (props) => {
 				})}
 				<line x1="20" y1="250" x2="20" y2="20" stroke="black" strokeWidth="1" />
 				<line x1="20" y1="250" x2="600" y2="250" stroke="black" strokeWidth="1" />
-				<text x="10" y="120" textAnchor="middle" fill="black" fontSize="14" transform="rotate(-90, 10, 120)" fontWeight="bold">Value</text>
-				<text x="210" y="310" textAnchor="middle" fill="black" fontSize="14" fontWeight="bold">Date</text>
+				<text x="10" y="120" textAnchor="middle" fill="black" fontSize="14" transform="rotate(-90, 10, 120)" fontWeight="bold">{__('Value', 'vuejs-challenge')}</text>
+				<text x="210" y="310" textAnchor="middle" fill="black" fontSize="14" fontWeight="bold">{__('Date', 'vuejs-challenge')}</text>
 			</svg>
 			<div>
-				<button onClick={refreshData} title="Refresh chart data">Refresh</button>
+				<button onClick={refreshData} title="Refresh chart data">{__('Refresh', 'vuejs-challenge')}</button>
 			</div>
 			{spinnerVisible && <div className="graph-spinner-wrapper"><Spinner /></div>}
 		</div>
